@@ -26,7 +26,7 @@ class sarsa_algorithm(Windy_World):
             return np.random.choice(self.action_space)
     
     def sarsa(self):
-        
+
         for i in range(self.number_episode):
             state = self.reset()
             action = self.policy(state)
