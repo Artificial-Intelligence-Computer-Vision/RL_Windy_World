@@ -121,6 +121,9 @@ class Grid_World(object):
         
         if self.action_type == "regular":
             self.action_space = [0, 1, 2, 3]
+
+        elif self.action_type == "big world":
+            self.action_space = [0, 1, 2, 3]
             
         self.start = (0, 0)
         self.goal = (2, 2)

@@ -23,9 +23,9 @@ class plot_graphs():
 
 
 
-    def plot_windy(self):
+    def plot_windy(self, q_value):
         
-        action_path = self.action_path(self.q_value)
+        action_path = self.action_path(q_value)
         fig = plt.figure()
         axis = fig.add_subplot(111)
         axis.set_xlim(-0.5, 9.5)
@@ -42,7 +42,7 @@ class plot_graphs():
             
                 params = {'head_width':0.2, 'head_length':0.2, 'color':'gray', 'alpha':.2}
                 if self.action_type == "regular":
-                    action = np.argmax([self.q_value[(x,y), a] for a in self.action_space])
+                    action = np.argmax([q_value[(x,y), a] for a in self.action_space])
                     if action == 0:
                         axis.arrow(x, y, -0.1, 0, **params)
                     elif action == 1:
@@ -53,7 +53,7 @@ class plot_graphs():
                         axis.arrow(x, y, 0,  0.1, **params)
                         
                 elif self.action_type == "king":
-                    action = np.argmax([self.q_value[(x,y), a] for a in self.action_space])
+                    action = np.argmax([q_value[(x,y), a] for a in self.action_space])
                     if action == 0:
                         axis.arrow(x, y, -0.1, 0, **params)
                     elif action == 1:
@@ -72,7 +72,7 @@ class plot_graphs():
                         axis.arrow(x, y, 0.1,  0.1, **params)
                         
                 elif self.action_type == "king_zero":
-                    action = np.argmax([self.q_value[(x,y), a] for a in self.action_space])
+                    action = np.argmax([q_value[(x,y), a] for a in self.action_space])
                     if action == 0:
                         axis.arrow(x, y, -0.1, 0, **params)
                     elif action == 1:
@@ -102,22 +102,27 @@ class plot_graphs():
 
 
 
-    def plot_episode_time_step(self, type_graph = "reward", type_graph_name = "default"):
+    def plot_episode_time_step(self, data,  type_graph = "reward", type_graph_name = "default"):
 
         fig = plt.figure()
         axis = fig.add_subplot(111)
         if type_graph == "reward":
-            axis.plot(self.reward_average, color='blue')
+            axis.plot(data, color='blue')
             plt.axhline(y=0.2, color='red', linestyle='-')
             axis.set_title(type_graph_name+ " Reward vs Time Step")
             axis.set_xlabel("Time Steps")
             axis.set_ylabel("Reward per Step")
         elif type_graph == "action":
-            axis.plot(self.max_action, color='blue')
+            axis.plot(data, color='blue')
             axis.set_title(type_graph_name + " Maximal Action vs Time Step")
             plt.axhline(y=0.36, color='red', linestyle='-')
             axis.set_xlabel("Time Steps")
             axis.set_ylabel("Maximal Action Value")
+        elif type_graph == "time_step":
+            axis.plot(data, color='blue')
+            axis.set_title(type_graph_name +" Episode vs Time Step")
+            axis.set_xlabel("Time Steps")
+            axis.set_ylabel("Episodes")
         plt.savefig((str(self.chart_path) + type_graph_name + "_" + type_graph + "_.png"), dpi =500)
 
 
