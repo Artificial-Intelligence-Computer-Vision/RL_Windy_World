@@ -1,8 +1,11 @@
 from header_import import *
 
-class plot_graphs(object):
+class plot_graphs():
     def __init__(self):
         self.path = "graphs_charts/"
+
+        self.chart_path = self.path + "charts/"
+        self.enviroment = self.path + "enviroment/"
 
 
 
@@ -95,7 +98,7 @@ class plot_graphs(object):
             next_x, next_y = action_path[i+1]
             axis.plot([x, next_x], [y, next_y], color='blue', alpha=1.0)
 
-        plt.savefig((str(self.path) + type_graph_name + "_" + type_graph + "_policy_graphs.png"), dpi =500)
+        plt.savefig((str(self.enviroment) + type_graph_name + "_" + type_graph + "_paths.png"), dpi =500)
 
 
 
@@ -115,7 +118,7 @@ class plot_graphs(object):
             plt.axhline(y=0.36, color='red', linestyle='-')
             axis.set_xlabel("Time Steps")
             axis.set_ylabel("Maximal Action Value")
-        plt.savefig((str(self.path) + type_graph_name + "_" + type_graph + "_policy_graphs.png"), dpi =500)
+        plt.savefig((str(self.chart_path) + type_graph_name + "_" + type_graph + "_.png"), dpi =500)
 
 
 

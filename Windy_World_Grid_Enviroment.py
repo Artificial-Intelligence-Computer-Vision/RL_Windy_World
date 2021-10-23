@@ -59,7 +59,7 @@ class Windy_World(object):
             elif action == 4:
                 x -= 1
                 y -= 1
-        elif action == 5:
+            elif action == 5:
                 x -= 1
                 y += 1
             elif action == 6:
