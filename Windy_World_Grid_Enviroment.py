@@ -30,13 +30,14 @@ class Windy_World(object):
         return False, -1, (self.x_position, self.y_position)
         
     def transition(self, x, y, action):
+       
+
         
         if x in [3, 4, 5, 8]:
             y += 1
         if x in [6, 7]:
             y += 2
-            
-        
+
         if self.action_type == "regular":
             if action == 0:
                 x -= 1
@@ -48,6 +49,17 @@ class Windy_World(object):
                 y += 1
 
         elif self.action_type == "king":
+            if x in [6,7]:
+                if self.wind_action == "not_regular":
+                    
+                    prob = random.random()    
+                    if prob < 0.33:
+                        y += 1
+                    elif prob < 0.66 and prob > 0.33:
+                        y = y
+                    elif prob < 1 and prob > 0.66:
+                        y -= 1
+
             if action == 0:
                 x -= 1
             elif action == 1:
@@ -94,17 +106,7 @@ class Windy_World(object):
                 x += 0
                 y += 0
                 
-                
-        if self.wind_action != "regular":
-            prob = random.random()
-            
-            if prob < 0.33:
-                y -= 1
-            elif prob < 0.66:
-                y = y
-            elif prob < 1:
-                y += 1
-                
+
         x = np.clip(x, 0, 9)
         y = np.clip(y, 0, 6)
         

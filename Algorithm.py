@@ -38,11 +38,11 @@ class sarsa_algorithm(Windy_World):
                 state, action = next_state, next_action
                 self.time_step.append(i)
                 if len(self.time_step) >= self.max_time_step:
-                    return self.time_step
+                    return self.time_step, self.q_value
                     
                 if done:
                     break
-                    
+                   
         return self.time_step, self.q_value
                     
 
@@ -127,8 +127,7 @@ class q_learning_algorithm(Grid_World):
                     max_qvalue_2 = np.max([self.q_value_2[next_state, a] for a in self.action_space])
                     self.q_value_2[state, action] = self.q_value_2[state, action] + self.alpha * (reward + self.gamma * max_qvalue - self.q_value_2[state, action])
                 
-                self.q_value_sum[state, action] = self.q_value[state, action]
-                # self.q_value_sum[state, action] = self.q_value[state, action] + self.q_value_2[state, action]
+                self.q_value_sum[state, action] = self.q_value[state, action] + self.q_value_2[state, action]
                 reward_list += reward
                 state = next_state
                 count += 1
@@ -140,7 +139,9 @@ class q_learning_algorithm(Grid_World):
             reward_list /= count
             self.rewards.append(reward_list)
             self.reward_average.append(sum(self.rewards) / len(self.rewards))
-
+        
+        self.reward_average = self.reward_average[:-self.number_episode]
+        self.max_action = self.max_action[:-self.number_episode]
 
         return self.reward_average,  self.max_action
 

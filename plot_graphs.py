@@ -1,17 +1,17 @@
 from header_import import *
 
-class plot_graphs():
-    def __init__(self):
+class plot_graphs(Windy_World):
+    def __init__(self, action_type, wind_type):
+        super().__init__(action_type, wind_type)
         self.path = "graphs_charts/"
 
         self.chart_path = self.path + "charts/"
         self.enviroment = self.path + "enviroment/"
 
 
-
     def action_path(self, q_value):
-        x, y = self.start
-        path = [self.start]
+        x, y = (0, 3)
+        path = [(0,3)]
         for _ in range(100):
             best_action = np.argmax([q_value[(x,y), a] for a in self.action_space])
             x, y = self.transition(x, y, best_action)
@@ -23,7 +23,7 @@ class plot_graphs():
 
 
 
-    def plot_windy(self, q_value):
+    def plot_windy(self, q_value, type_graph = "reward", type_graph_name = "default"): 
         
         action_path = self.action_path(q_value)
         fig = plt.figure()
